@@ -3,8 +3,13 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Pure Javascript Quiz App</title>
+	<link rel="stylesheet" href="style.css">
 </head>
 <body>
+<section class='quizTime'>
+	<h1>Do you Know Harry Potter as Well as you Should?</h1>
+	<button id='start'>Click To Start Quiz</button>
+</section>
 <nav id='new'>
 	<a href="#">New Game</a>
 </nav>
@@ -12,7 +17,7 @@
 		<div class="quiz">
 			<h1 class="header">Harry Potter Quiz</h1>
 			<br>
-			<div class="questions"></div>
+			<div id="questions"></div>
 			<br>
 			<div class="answers">
 			</div>
@@ -21,10 +26,15 @@
 			<div class="youChoose"></div>
 			<div class="score"></div>
 		</div>
-	</div>
+		</div>
+		<section class="score">
+  <h2 class="message"></h2>
+</section>
+	
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script type="text/javascript" src="app.js"></script>
+<!-- <script type="text/javascript" src="app.js"></script> -->
+<script type="text/javascript" src="new.js"></script>
 	
 </body>
 </html>

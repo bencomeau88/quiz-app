@@ -1,6 +1,16 @@
-.questions, .answers {
+#questions, .answers {
 	color:black;
 	font-family: sans-serif;
 	font-size:20;
-	
+
 }
+
+.quiz, #new {
+	display:none;
+}
+
+.score, .message {
+	display: block;
+}
+
+/*.quizTime, #new, #score { display: none; }*/

@@ -1,96 +1,110 @@
-// use a constructor instead example function quiz (question,choices,answer){};
-// do these go after the $(doc).ready? or before?
+//global Variables 
+var currentQuestion = 0;
+var questionTotal = 4;
+var score = 0;
+//used constructor function to create the quiz array/object
+var quiz = [{
+        question: "What house does Harry Potter belong to?",
+        choices: ["Slitherin ", " Hufflepuff ", "Griffindor", " Ravenclaw"],
+        answer: "Griffindor"
+    }, {
+        question: "What is the Core of HP's Wand Made From?",
+        choices: ["Dragon Heartstring", "Unicorn Tail Hair", "Phoenix Feather", "Troll Whisker"],
+        answer: "Phoenix Feather"
+    }, {
+        question: "What is Albus Dumbledore's Full Name?",
+        choices: ["Albus Dumbledore", "Albus Percival Wilfric Brian Dumbledore", "Albus Percival Wilfric Dumbledore", "Albus Severus Wilfric Brian Dumbledore"],
+        answer: "Albus Percival Wilfric Brian Dumbledore"
+    }, {
+        question: "What Dragon Does Victor Krum Battle?",
+        choices: ["Norwegian Ridgeback", "Hungarian Horntail", "Welsh Green", "Chinese Firebolt"],
+        answer: "Chinese Firebolt"
+    },	
+   	
+];
 
-
+var currentQuiz = quiz[currentQuestion];
 
 $(document).ready(function() {
-var score = 0;
+
+    //start screen
+    $('.quiz').hide();
+    $('.quizTime').show();
+    $('#new').hide();
+    $('#score').hide();
+
+    //how to cycle through the current question in the object 
 
 
-    var quiz = [{
-            // with a constructor use this.question, 
-            question: "What house did Harry Potter belong to?",
-            choices: ["Slitherin ", " Hufflepuff ", "Griffindor", " Ravenclaw"],
-            answer: "Griffindor"
-        }, {
-            question: "What is the Core of HP's Wand Made From?",
-            choices: ["Dragon Heartstring", "Unicorn Tail Hair", "Phoenix Feather", "Troll Whisker"],
-            answer: "Phoenix Feather"
-        }, {
-            question: "What is Albus Dumbledore's Full Name?",
-            choices: ["Albus Dumbledore", "Albus Percival Wilfric Brian Dumbledore", "Albus Percival Wilfric Dumbledore", "Albus Severus Wilfric Brian Dumbledore"],
-            answer: "Albus Percival Wilfric Brian Dumbledore"
-        }, {
-            question: "What Dragon Does Victor Krum Battle?",
-            choices: ["Norwegian Ridgeback", "Hungarian Horntail", "Welsh Green", "Chinese Firebolt"],
-            answer: "Chinese Firebolt"
-        }
-
-
-    ];
-
-// how do I not use the last question that I used
-// var random = quiz[Math.floor(Math.random()*4)];
-// console.log(random);
-// var currentQuiz = quiz[random];
-// // console.log(currentQuiz);
-// currentQuiz = random;
-var tracker = [];
-var currentQuestion = 0;
-var currentQuiz = quiz[currentQuestion];
-runQuiz(currentQuiz);
-
-    function runQuiz(currentQuiz) {
-        $('.questions').append('<p>' + currentQuiz.question)
-        for (i = 0; i < currentQuiz.choices.length; i++) {
-            $('.answers').append('<li>' + '<input type="radio" name="aToD" value="' + currentQuiz.choices[i] + '">' + currentQuiz.choices[i] + '</li>');
-            $('.answers').css('listStyleType', 'none');
-        }
-        $('#submit').on('click', function(e) {
-            e.preventDefault();
-            console.log($("input[name='aToD']:checked").val());
-        if ($("input[name='aToD']:checked").val() === currentQuiz.answer) {
+   
+    //checks the radio button value and if it's right increments the score and logs ("you got it right!")
+    $('#submit').on('click', function(e) {
+        e.preventDefault();
+        // console.log(quiz[currentQuestion]);
+        if ($("input[name='aToD']:checked").val() === quiz[currentQuestion].answer) {
             console.log('you got it right!')
             score++;
-            // runNext();
         } else {
             console.log('WRONG!');
         }
-        currentQuestion++;
-        console.log(currentQuestion)
-        runQuiz(currentQuiz);
-        // runNext();
-   
+        //Total questions=threshold once you have answered 4 the score will display
+        if (currentQuestion == 4) {
+            $('#score').show();
+        }
+        //DON'T WORRY ABOUT THIS it is just a placeholder...obviously this needs to show score based on amount wrong/right
+        else {
+            currentQuestion++;
+            //display score function?
+        }
+        //reguardless of the answer the HTML classes will empty
+        displayQuiz(quiz[currentQuestion]);
+        // $('.answers').empty();
+        // $('#questions').empty();
     });
-     };
-   // function runNext(){
-   //      if (currentQuestion==0){
-   //      	runQuiz(currentQuiz[0]);
-   //      }
-   //      else if (currentQuestion==1){
-   //      	runQuiz(currentQuiz[1]);
-   //      }
-   //      else if (currentQuestion==2){
-   //      	runQuiz(currentQuiz[2]);
-   //      }
-   //      else if (currentQuestion==3) {
-   //      	runQuiz(currentQuiz[3])
-   //      }
-   //      else {
-   //      	console.log('tomatoes');
-   //      	// runScoreSheet();
-   //      }
-   //  };
+    // }; 
+    //append/display the current quiz question and choices from the object
+    function displayQuiz(singleQuiz) {
+    	$('.answers').empty();
+        $('#questions').empty();
+        console.log($('#questions'));
+        $('#questions').append('<p>' + singleQuiz.question + '</p>');
+        // TEST LINE $('body').append("<p> Hello!</p>");
+        for (i = 0; i < singleQuiz.choices.length; i++) {
+            $('.answers').append('<li>' + '<input type="radio" name="aToD" value="' + singleQuiz.choices[i] + '">' + singleQuiz.choices[i] + '</li>');
+            $('.answers').css('listStyleType', 'none');
+        }
+    }
+
+    // calls function "displayQuiz();" with the current question[#]...this should cycle through the objects in the array of 'quiz'	
+    displayQuiz(quiz[currentQuestion]);
 
 
+    //BOTH WORK.
+    //start quiz button
+    $('#start').on('click', function() {
+        $('.quiz').show();
+        $('.quizTime').hide();
+        $('#new').show();
+    })
 
-$('#new').on('click', function() {
+    //new game button
+    $('#new').on('click', function() {
         location.reload(true);
     });
-
+    //end of code 
 });
- 
 
+//OLD CODE BELOW. BEWARE YE WHO ENTER HERE. 
+
+
+   //***************
+    //CODE TO MAKE QUIZ RANDOM....
+    // var random = quiz[Math.floor(Math.random()*4)];
+    // console.log(random);
+    // var currentQuiz = quiz[random];
+    // // console.log(currentQuiz);
+    // currentQuiz = random;
+    //*****END*******
 
 
 // function quiz(question,choices,answer){
